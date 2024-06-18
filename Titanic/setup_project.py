@@ -9,25 +9,34 @@ import os
 import sys
 import subprocess
 
-def add_paths():
-    # Add the parent directory of root to the system path
-    project_root = os.path.abspath(os.path.dirname(__file__))
-    if project_root not in sys.path:
-        sys.path.append(project_root)
-        print(f"Added {project_root} to sys.path")
+def add_paths(root_dir):
+    """
+    Recursively add all directories under root_dir to sys.path
+    """
+    for dirpath, _, _ in os.walk(root_dir):
+        if dirpath not in sys.path:
+            sys.path.append(dirpath)
+            print(f"Added {dirpath} to sys.path")
 
-def install_dependencies():
-    # Install dependencies from requirements.txt
-    requirements_path = os.path.join(os.path.dirname(__file__), 'requirements.txt')
-    if os.path.exists(requirements_path):
-        subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', requirements_path])
-        print("Dependencies installed")
-    else:
-        print("requirements.txt not found")
+def install_dependencies(root_dir):
+    """
+    Recursively find and install dependencies listed in all requirements.txt files under root_dir
+    """
+    for dirpath, _, filenames in os.walk(root_dir):
+        if 'requirements.txt' in filenames:
+            requirements_path = os.path.join(dirpath, 'requirements.txt')
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', requirements_path])
+            print(f"Installed dependencies from {requirements_path}")
 
 def main():
-    add_paths()
-    install_dependencies()
+    project_root = os.path.abspath(os.path.dirname(__file__))
+    
+    print("Adding paths to sys.path...")
+    add_paths(project_root)
+    
+    print("Installing dependencies...")
+    install_dependencies(project_root)
+    
     print("Project setup complete")
 
 if __name__ == "__main__":
