@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jun 18 15:59:18 2024
+Created on Tue Jun 18 16:05:06 2024
 
 @author: Vitor Hugo Mourão & Natália dos Reis
 """
 
-
+# models/__init__.py
+# This file can be empty
