@@ -26,6 +26,6 @@ test_data_path = os.path.join(root_path, 'data', 'raw', 'test.csv')
 # Defining the path to the processed training data file
 train_data_processed = os.path.join(root_path, 'data', 'processed', 'train_processed.csv')
 
-# If this script is being run as the main program, preprocess the training data
+# If this script is being run as the main program
 if __name__ == '__main__':
-    preprocess_data(train_data_path, train_data_processed)
+    preprocess_data(train_data_path, train_data_processed) # preprocess the training data
