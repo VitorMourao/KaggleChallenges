@@ -10,6 +10,6 @@ from utils.io_utils import load_data, save_data
 def preprocess_data(filepath_I,filepath_O):
     df = load_data(filepath_I)
     copy_df = df.copy()
-    #Preprocess code...
+    #Pre-Process data
     save_data(copy_df, filepath_O)
     return
