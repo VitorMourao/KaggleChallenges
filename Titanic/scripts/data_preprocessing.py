@@ -7,13 +7,17 @@ Created on Tue Jun 18 15:59:18 2024
 
 from utils.io_utils import load_data, save_data
 from sklearn.impute import KNNImputer
-import numpy as np
 
 def missing_values(df):
     df.drop(columns=['Cabin'], inplace=True)  # Dropping 'Cabin' due to too many missing values
     df['Embarked'].fillna(df['Embarked'].mode()[0], inplace=True) # Only one missing value
-    imputer=KNNImputer(n_neighbors=5)
-    df['Age'] = imputer.fit_transform(df[['Age']])
+    
+    # Select numeric columns for KNNImputer (KNNImputer works on numeric data)
+    numeric_columns = df.select_dtypes(include=['number']).columns
+    
+    # Apply KNNImputer on the entire dataset
+    imputer = KNNImputer(n_neighbors=5)
+    df[numeric_columns] = imputer.fit_transform(df[numeric_columns])
     return df
 
 def preprocess_data(filepath_I,filepath_O):
