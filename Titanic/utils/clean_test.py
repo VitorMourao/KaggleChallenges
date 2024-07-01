@@ -2,7 +2,7 @@
 """
 Created on Mon Jul  1 18:36:29 2024
 
-@author: vitor
+@author: Vitor Hugo Mourão & Natália dos Reis
 """
 
 def reduce_test_df(test_df):
