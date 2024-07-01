@@ -13,6 +13,7 @@ ipython.run_line_magic('autoreload', '2') # Setting 'autoreload' to mode 2, relo
 
 # Importing necessary modules
 import os
+import pandas as pd
 from get_root_path import get_root_path
 from scripts.data_preprocessing import preprocess_data
 
@@ -29,3 +30,5 @@ train_data_processed = os.path.join(root_path, 'data', 'processed', 'train_proce
 # If this script is being run as the main program
 if __name__ == '__main__':
     preprocess_data(train_data_path, train_data_processed) # preprocess the training data
+    data_old = pd.read_csv(train_data_path)
+    data_new = pd.read_csv(train_data_processed)
