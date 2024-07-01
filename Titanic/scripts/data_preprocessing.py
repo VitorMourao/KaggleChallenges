@@ -6,6 +6,7 @@ Created on Tue Jun 18 15:59:18 2024
 """
 
 from utils.io_utils import load_data, save_data
+from utils.imputation_utils import apply_knn_imputation
 from sklearn.impute import KNNImputer
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import logging
@@ -58,14 +59,7 @@ def missing_values(df, drop_columns, fillna_columns, n_neighbors = 5):
 
     # Apply KNNImputer only to specified columns
     if knn_columns:
-        numeric_columns = df.select_dtypes(include=['number']).columns
-        imputer = KNNImputer(n_neighbors=n_neighbors)
-        knn_df = df[numeric_columns].copy()
-        imputed_knn_values = imputer.fit_transform(knn_df)
-        imputed_knn_df = pd.DataFrame(imputed_knn_values, columns=numeric_columns)
-        for col in knn_columns:
-            df[col] = imputed_knn_df[col]
-        logging.info(f"Applied KNNImputer with {n_neighbors} neighbors on columns: {knn_columns}.")
+        df = apply_knn_imputation(df, knn_columns, n_neighbors)
         
     return df
 
