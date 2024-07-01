@@ -7,7 +7,7 @@ Created on Mon Jul  1 18:19:21 2024
 
 from utils.clean_test import reduce_test_df
 
-def women_first(test_df):
+def women_first(df):
     """
     Assigns survival predictions based on the 'women and children first' principle.
     
@@ -22,6 +22,7 @@ def women_first(test_df):
     Returns:
     pd.DataFrame: The input DataFrame with an additional 'Survived' column filled with survival predictions.
     """
+    test_df = df.copy()
     test_df['Survived'] = 0 # Initialize all passengers as not survived
     test_df.loc[test_df['Sex'] == 'female', 'Survived'] = 1 # Set 'Survived' to 1 for female passengers
     test_df = reduce_test_df(test_df)
