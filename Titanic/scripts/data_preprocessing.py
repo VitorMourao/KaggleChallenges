@@ -7,6 +7,7 @@ Created on Tue Jun 18 15:59:18 2024
 
 from utils.io_utils import load_data, save_data
 from sklearn.impute import KNNImputer
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import logging
 import pandas as pd
 
@@ -68,18 +69,28 @@ def missing_values(df, drop_columns, fillna_columns, n_neighbors = 5):
         
     return df
 
+def normalization(df, normalize_columns, method):
+    # Check if all columns in normalize_columns are numeric
+    non_numeric_columns = [col for col in normalize_columns if not pd.api.types.is_numeric_dtype(df[col])]
+    
+    if non_numeric_columns:
+        raise ValueError(f"Columns {non_numeric_columns} are not numeric and cannot be normalized.")
+    
+    if method == 'mm':
+        scaler = MinMaxScaler()
+    elif method == 'std':
+        scaler = StandardScaler()
+    else:
+        raise ValueError("Method must be 'mm' (Min-Max Scaling) or 'std' (Standardization)")
+    
+    df[normalize_columns] = scaler.fit_transform(df[normalize_columns])
+    return df
+
 def preprocess_data(filepath_I,filepath_O):
     df = load_data(filepath_I)
     copy_df = df.copy()
     copy_df = missing_values(copy_df, drop_columns = ['Cabin'], fillna_columns={'Embarked':'mode', 'Age':'knn'}, n_neighbors=5)
+    copy_df = normalization(copy_df, normalize_columns = ['Age','SibSp','Parch','Fare'], method = 'std')
+    
     save_data(copy_df, filepath_O)
     return
-
-
-
-
-# # Verify missing values after cleaning
-# print("\nMissing Values After Cleaning")
-# print(df.isnull().sum())
-
-# Balance classes
