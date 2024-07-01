@@ -17,6 +17,7 @@ import pandas as pd
 from utils.io_utils import save_data
 from scripts.data_preprocessing import preprocess_data
 from models.fem_survived_male_died import women_first
+from models.logistic_regression import train_logistic_regression, test_logistic_regression
 
 # Defining the paths to the training and test data files
 train_data_path = os.path.join('data', 'raw', 'train.csv')
@@ -43,4 +44,8 @@ if __name__ == '__main__':
     model_01_df = women_first(test_df) # Does not need any training
     model_01_df_data_path = os.path.join(test_predict_path, 'test_01.csv')
     save_data(model_01_df, model_01_df_data_path)
+    
+    # Implement Logistic Regression 
+    model_02 = train_logistic_regression(data_new)
+    model_02_df = test_logistic_regression(model_02, test_df)
     
