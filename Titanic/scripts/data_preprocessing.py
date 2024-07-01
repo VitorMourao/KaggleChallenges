@@ -7,7 +7,6 @@ Created on Tue Jun 18 15:59:18 2024
 
 from utils.io_utils import load_data, save_data
 from utils.imputation_utils import apply_knn_imputation
-from sklearn.impute import KNNImputer
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import logging
 import pandas as pd
