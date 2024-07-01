@@ -14,18 +14,14 @@ ipython.run_line_magic('autoreload', '2') # Setting 'autoreload' to mode 2, relo
 # Importing necessary modules
 import os
 import pandas as pd
-from get_root_path import get_root_path
 from scripts.data_preprocessing import preprocess_data
 
-# Getting the root path of the project
-root_path = get_root_path()
-
 # Defining the paths to the training and test data files
-train_data_path = os.path.join(root_path, 'data', 'raw', 'train.csv')
-test_data_path = os.path.join(root_path, 'data', 'raw', 'test.csv')
+train_data_path = os.path.join('data', 'raw', 'train.csv')
+test_data_path = os.path.join('data', 'raw', 'test.csv')
 
 # Defining the path to the processed training data file
-train_data_processed = os.path.join(root_path, 'data', 'processed', 'train_processed.csv')
+train_data_processed = os.path.join('data', 'processed', 'train_processed.csv')
 
 # If this script is being run as the main program
 if __name__ == '__main__':
