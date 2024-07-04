@@ -63,9 +63,22 @@ def missing_values(df, drop_columns, fillna_columns, n_neighbors = 5):
     return df
 
 def normalization(df, normalize_columns, method):
+    """
+    Normalize numeric columns
+    
+    Parameters:
+    df (pd.DataFrame): The DataFrame to process.
+    normalize_columns (list): List of columns to normalize.
+    method (str): String that decides which normalization methods will be used
+                           String: 'mm', 'std'
+                           Methods: 'MinMaxScaler', "StandardScaker".
+                           These columns must be numeric.
+    Returns:
+    pd.DataFrame: DataFrame with normalized values.
+    """
     # Check if all columns in normalize_columns are numeric
     non_numeric_columns = [col for col in normalize_columns if not pd.api.types.is_numeric_dtype(df[col])]
-    
+  
     if non_numeric_columns:
         raise ValueError(f"Columns {non_numeric_columns} are not numeric and cannot be normalized.")
     
