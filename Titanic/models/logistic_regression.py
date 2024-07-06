@@ -6,6 +6,7 @@ Created on Mon Jul  1 20:00:28 2024
 
 """
 
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
@@ -36,8 +37,6 @@ def test_logistic_regression(model, test_data):
     # Select only numeric columns and exclude 'PassengerId'
     X_test = data.select_dtypes(include=[float, int]).drop(columns=['PassengerId'])
 
-
-    
     # Ensure all columns match between training and test datasets
     missing_cols = set(model.feature_names_in_) - set(X_test.columns)
     for col in missing_cols:
@@ -47,4 +46,10 @@ def test_logistic_regression(model, test_data):
     # Make predictions
     predictions = model.predict(X_test)
 
-    return predictions
+    # Create the output DataFrame
+    output_df = pd.DataFrame({
+        test_data.columns[0]: test_data.iloc[:, 0],
+        'Survived': predictions
+    })
+
+    return output_df

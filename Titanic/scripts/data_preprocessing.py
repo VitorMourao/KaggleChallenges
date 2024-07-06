@@ -92,11 +92,11 @@ def normalization(df, normalize_columns, method):
     df[normalize_columns] = scaler.fit_transform(df[normalize_columns])
     return df
 
-def preprocess_data(filepath_I,filepath_O):
+def preprocess_data(filepath_I,filepath_O, drop_columns, fillna_columns, n_neighbors, normalize_columns, method):
     df = load_data(filepath_I)
     copy_df = df.copy()
-    copy_df = missing_values(copy_df, drop_columns = ['Cabin'], fillna_columns={'Embarked':'mode', 'Age':'knn'}, n_neighbors=5)
-    copy_df = normalization(copy_df, normalize_columns = ['Age','SibSp','Parch','Fare'], method = 'std')
+    copy_df = missing_values(copy_df, drop_columns, fillna_columns, n_neighbors)
+    copy_df = normalization(copy_df, normalize_columns, method)
     
     save_data(copy_df, filepath_O)
     return

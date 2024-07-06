@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['models\\fem_survived_male_died.py', 'main.py', 'models\\logistic_regression.py', 'data\\raw\\test.csv']
+recent_files = ['models\\fem_survived_male_died.py', 'main.py', 'models\\logistic_regression.py', 'data\\raw\\test.csv', 'scripts\\data_preprocessing.py']
 
 [main]
 version = 0.2.0
