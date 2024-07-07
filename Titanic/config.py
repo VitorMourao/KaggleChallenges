@@ -13,7 +13,7 @@ test_data_path = os.path.join('data', 'raw', 'test.csv')
 train_data_processed = os.path.join('data', 'processed', 'train_processed.csv')
 test_data_processed = os.path.join('data', 'processed', 'test_processed.csv')
 test_predict_path = os.path.join('outputs', 'test_predictions')
-model_eval_path = os.path.join('outputs', 'model_evaluations')
+model_eval_path = os.path.join('outputs', 'model_evaluations', 'models_evals.csv')
 
 # Preprocessing parameters
 train_preprocessing_params = {
