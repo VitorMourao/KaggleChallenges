@@ -31,7 +31,7 @@ def women_first(train, test):
     
     # Calculate accuracy
     accuracy = (train_df['Survived'] == train_df['PredictedSurvived']).mean()
-    print(f"Accuracy on training data: {accuracy * 100:.2f}%")
+    print(f"Accuracy on training data (Model_01): {accuracy * 100:.2f}%")
     
     # Predict survival for the test data
     test_df = test.copy()
