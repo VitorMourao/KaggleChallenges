@@ -13,7 +13,6 @@ ipython.run_line_magic('autoreload', '2') # Setting 'autoreload' to mode 2, relo
 
 # Importing necessary modules
 import os
-import pandas as pd
 from utils.io_utils import load_data, save_data
 from scripts.data_preprocessing import preprocess_data
 from models.fem_survived_male_died import women_first
@@ -34,11 +33,11 @@ model_eval_path = os.path.join('outputs', 'model_evaluations')
 
 # If this script is being run as the main program
 if __name__ == '__main__':
+    data_old = load_data(train_data_path)
     preprocess_data(train_data_path, train_data_processed, drop_columns = ['Cabin'],
                     fillna_columns={'Embarked':'mode', 'Age':'knn'}, n_neighbors=5,
                     normalize_columns = ['Age','SibSp','Parch','Fare'], method = 'std') # preprocess the training data
-    data_old = pd.read_csv(train_data_path) # TODO: load_data()
-    data_new = pd.read_csv(train_data_processed) # TODO: load_data()
+    data_new = load_data(train_data_processed)
     
     # Save the test dataset
     test_old = load_data(test_data_path)
