@@ -11,6 +11,16 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 def train_logistic_regression(train_data):
+    """
+   Trains a logistic regression model on the provided training data and evaluates its accuracy.
+
+   Parameters:
+   train_data (pd.DataFrame): A DataFrame containing the training data with a 'Survived' column 
+                              indicating the target variable and a 'PassengerId' column to be excluded.
+
+   Returns:
+   LogisticRegression: The trained logistic regression model.
+   """
     # Create a copy of the training data
     data = train_data.copy()
 
@@ -24,13 +34,22 @@ def train_logistic_regression(train_data):
 
     # Predict on the training data to check accuracy
     y_pred = model.predict(X)
-    accuracy = accuracy_score(y, y_pred)
-    print(f'Training Accuracy: {accuracy:.2f}')
+    accuracy = accuracy_score(y, y_pred)*100
+    print(f'Accuracy on training data (Model_02): {accuracy:.2f}%')
 
     return model
 
 def test_logistic_regression(model, test_data):
-    
+    """
+    Tests a logistic regression model on the provided test data and generates survival predictions.
+
+    Parameters:
+    model (LogisticRegression): The trained logistic regression model.
+    test_data (pd.DataFrame): A DataFrame containing the test data with a 'PassengerId' column.
+
+    Returns:
+    pd.DataFrame: A DataFrame containing 'PassengerId' and the predicted 'Survived' values.
+    """
     # Create a copy of the test data
     data = test_data.copy()
 
