@@ -11,9 +11,25 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 import matplotlib.pyplot as plt
 
+def plot_the_tree(X, y, model):
+    """
+    D-Tree Plot
+    """
+    # Get feature names
+    feature_names = X.columns.tolist()
+    
+    # Get class names (if target is categorical)
+    class_names = y.unique().astype(str).tolist()
+    
+    #TODO: create a function to plot.
+    # Plot the decision tree
+    plt.figure(figsize=(20,10))
+    tree.plot_tree(model, filled=True, feature_names=feature_names, class_names=class_names)
+    plt.show()
+
 def train_decision_tree(train_data, target, max_depth=None):
     """
-    D-Tree
+    D-Tree Train
     """
     try:
         # Create a copy of the training data
@@ -36,17 +52,7 @@ def train_decision_tree(train_data, target, max_depth=None):
         accuracy = clf.score(X, y)
         print(f"Accuracy on training data (Model_03): {accuracy}")
         
-        # Get feature names
-        feature_names = X.columns.tolist()
-        
-        # Get class names (if target is categorical)
-        class_names = y.unique().astype(str).tolist()
-        
-        #TODO: create a function to plot.
-        # Plot the decision tree
-        plt.figure(figsize=(20,10))
-        tree.plot_tree(clf, filled=True, feature_names=feature_names, class_names=class_names)
-        plt.show()
+        plot_the_tree(X, y, clf)
         
         return clf
     except Exception as e:
@@ -54,7 +60,7 @@ def train_decision_tree(train_data, target, max_depth=None):
 
 def test_decision_tree(model, test_data):
     """
-    D-Tree
+    D-Tree Test
     """
     
     return 1
