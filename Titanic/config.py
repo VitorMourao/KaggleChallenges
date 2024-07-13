@@ -31,3 +31,8 @@ test_preprocessing_params = {
     'normalize_columns': ['Age', 'SibSp', 'Parch', 'Fare'],
     'method': 'std'
 }
+
+# Models params
+# Tree
+target = 'Survived'
+max_depth = 3

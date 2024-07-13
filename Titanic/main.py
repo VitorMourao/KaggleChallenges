@@ -15,6 +15,7 @@ ipython.run_line_magic('autoreload', '2') # Setting 'autoreload' to mode 2, relo
 import os
 from config import train_data_path, train_data_processed, test_data_path, test_data_processed, test_predict_path, model_eval_path
 from config import train_preprocessing_params, test_preprocessing_params
+from config import target, max_depth
 from utils.io_utils import load_data, save_data
 from scripts.data_preprocessing import preprocess_data
 from models.fem_survived_male_died import women_first
@@ -36,7 +37,8 @@ def main(models, train_old, test_old, train_new, test_new):
         save_data(model_02_df, model_02_df_data_path)
     
     if 'model_03' in models:
-        model_03 = train_decision_tree(train_new, 'Survived', max_depth=3)
+        # Implement decision tree Logistic Regression 
+        model_03 = train_decision_tree(train_new, target, max_depth)
         model_03_df = test_decision_tree(model_03, test_new)
         model_03_df_data_path = os.path.join(test_predict_path, 'test_03.csv')
         save_data(model_03_df, model_03_df_data_path)
