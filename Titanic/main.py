@@ -19,6 +19,7 @@ from utils.io_utils import load_data, save_data
 from scripts.data_preprocessing import preprocess_data
 from models.fem_survived_male_died import women_first
 from models.logistic_regression import train_logistic_regression, test_logistic_regression
+from models.decision_tree import train_decision_tree
 
 def main(models, train_old, test_old, train_new, test_new):
     if 'model_01' in models:
@@ -35,7 +36,7 @@ def main(models, train_old, test_old, train_new, test_new):
         save_data(model_02_df, model_02_df_data_path)
     
     if 'model_03' in models:
-        print("model_03 not implemented yet\n")
+        model_03 = train_decision_tree(train_new, 'Survived', max_depth=3)
     
     if 'model_04' in models:
         print("model_04 not implemented yet\n")
