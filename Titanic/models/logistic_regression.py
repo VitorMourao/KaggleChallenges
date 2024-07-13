@@ -67,7 +67,7 @@ def test_logistic_regression(model, test_data):
 
     # Create the output DataFrame
     output_df = pd.DataFrame({
-        test_data.columns[0]: test_data.iloc[:, 0],
+        data.columns[0]: data.iloc[:, 0],
         'Survived': predictions
     })
 

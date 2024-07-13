@@ -11,17 +11,10 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn import tree
 import matplotlib.pyplot as plt
 
-def plot_the_tree(X, y, model):
+def plot_the_tree(feature_names, class_names, model):
     """
     D-Tree Plot
     """
-    # Get feature names
-    feature_names = X.columns.tolist()
-    
-    # Get class names (if target is categorical)
-    class_names = y.unique().astype(str).tolist()
-    
-    #TODO: create a function to plot.
     # Plot the decision tree
     plt.figure(figsize=(20,10))
     tree.plot_tree(model, filled=True, feature_names=feature_names, class_names=class_names)
@@ -52,7 +45,10 @@ def train_decision_tree(train_data, target, max_depth=None):
         accuracy = clf.score(X, y)
         print(f"Accuracy on training data (Model_03): {accuracy}")
         
-        plot_the_tree(X, y, clf)
+        # Plot the tree
+        feature_names = X.columns.tolist()
+        class_names = y.unique().astype(str).tolist()
+        plot_the_tree(feature_names, class_names, clf)
         
         return clf
     except Exception as e:
@@ -62,5 +58,19 @@ def test_decision_tree(model, test_data):
     """
     D-Tree Test
     """
+    # Create a copy of the training data
+    data = test_data.copy()
     
-    return 1
+    # Convert categorical features to numeric (same as training)
+    X_test = pd.get_dummies(data)
+    
+    # Predict the target values for the test data
+    predictions = model.predict(X_test)
+    
+    # Create the output DataFrame
+    output_df = pd.DataFrame({
+        test_data.columns[0]: test_data.iloc[:, 0],
+        'Survived': predictions
+    })
+
+    return output_df
