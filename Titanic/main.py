@@ -38,7 +38,7 @@ def main(models, train_old, test_old, train_new, test_new):
     
     if 'model_03' in models:
         # Implement decision tree Logistic Regression 
-        model_03 = train_decision_tree(train_new, target, max_depth)
+        model_03 = train_decision_tree(train_new, target, max_depth_range=range(1,11))
         model_03_df = test_decision_tree(model_03, test_new)
         model_03_df_data_path = os.path.join(test_predict_path, 'test_03.csv')
         save_data(model_03_df, model_03_df_data_path)
