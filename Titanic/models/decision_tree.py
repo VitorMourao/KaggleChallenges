@@ -7,7 +7,6 @@ Created on Fri Jul 12 22:53:31 2024
 
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import LabelEncoder
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn import tree
