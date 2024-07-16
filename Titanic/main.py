@@ -21,6 +21,7 @@ from scripts.data_preprocessing import preprocess_data
 from models.fem_survived_male_died import women_first
 from models.logistic_regression import train_logistic_regression, test_logistic_regression
 from models.decision_tree import train_decision_tree, test_decision_tree
+from models.random_forest import train_random_forest, test_random_forest
 
 def main(models, train_old, test_old, train_new, test_new):
     if 'model_01' in models:
@@ -37,7 +38,7 @@ def main(models, train_old, test_old, train_new, test_new):
         save_data(model_02_df, model_02_df_data_path)
     
     if 'model_03' in models:
-        # Implement decision tree Logistic Regression 
+        # Implement decision tree 
         model_03 = train_decision_tree(train_new, target, max_depth_range=range(1,11))
         model_03_df = test_decision_tree(model_03, test_new)
         model_03_df_data_path = os.path.join(test_predict_path, 'test_03.csv')
@@ -45,7 +46,11 @@ def main(models, train_old, test_old, train_new, test_new):
         
     
     if 'model_04' in models:
-        print("model_04 not implemented yet\n")
+        # Implement Random Forest
+        model_04 = train_random_forest(train_new, target,5 ,100)
+        model_04_df = test_random_forest(model_04, test_new)
+        model_04_df_data_path = os.path.join(test_predict_path, 'test_04.csv')
+        save_data(model_04_df, model_04_df_data_path)
     
     if 'model_05' in models:
         print("model_05 not implemented yet\n")
