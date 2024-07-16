@@ -14,7 +14,26 @@ import matplotlib.pyplot as plt
 
 def plot_the_tree(feature_names, class_names, model):
     """
-    D-Tree Plot
+    Plot a Decision Tree.
+
+    This function visualizes a trained decision tree model using matplotlib.
+
+    Parameters:
+    -----------
+    feature_names : list of str
+        A list of feature names used in the decision tree. These are the input features used 
+        for making decisions at each node.
+        
+    class_names : list of str
+        A list of class names corresponding to the target variable.
+        
+    model : DecisionTreeClassifier
+        A trained decision tree model from scikit-learn.
+
+    Returns:
+    --------
+    None
+        The function does not return any value. It directly displays the decision tree plot.
     """
     # Plot the decision tree
     plt.figure(figsize=(20,10))
@@ -23,7 +42,25 @@ def plot_the_tree(feature_names, class_names, model):
     
 def perform_cross_validation(X, y, max_depth_range):
     """
-    Perform cross-validation to find the best max depth.
+    Perform cross-validation to determine the optimal maximum depth for a Decision Tree Classifier.
+
+    Parameters:
+    -----------
+    X : array-like of shape (n_samples, n_features)
+        The input features for the model. This is the training data used for cross-validation.
+        
+    y : array-like of shape (n_samples,)
+        The target values (class labels) corresponding to the input features.
+        
+    max_depth_range : list or array-like of int
+        A list or range of integers representing the different maximum depths to evaluate 
+        for the decision tree classifier.
+
+    Returns:
+    --------
+    cv_scores : dict
+        A dictionary where the keys are the maximum depth values and the values are the mean 
+        cross-validation accuracy scores for those depths.
     """
     cv_scores = {}
     
@@ -42,7 +79,25 @@ def perform_cross_validation(X, y, max_depth_range):
 
 def train_decision_tree(train_data, target, max_depth_range):
     """
-    D-Tree Train
+    Train a Decision Tree Classifier with cross-validation to determine the optimal maximum depth.
+
+    Parameters:
+    -----------
+    train_data : pandas.DataFrame
+        The training dataset containing both features and the target variable.
+        
+    target : str
+        The name of the target variable (column) in the training dataset.
+        
+    max_depth_range : list or array-like of int
+        A list or range of integers representing the different maximum depths to evaluate 
+        for the decision tree classifier during cross-validation.
+
+    Returns:
+    --------
+    final_clf : DecisionTreeClassifier
+        The trained decision tree classifier with the optimal maximum depth determined by 
+        cross-validation.
     """
     try:
         # Create a copy of the training data
@@ -81,7 +136,22 @@ def train_decision_tree(train_data, target, max_depth_range):
 
 def test_decision_tree(model, test_data):
     """
-    D-Tree Test
+    Test a trained Decision Tree Classifier on new data and generate predictions.
+
+    Parameters:
+    -----------
+    model : DecisionTreeClassifier
+        A trained decision tree classifier.
+        
+    test_data : pandas.DataFrame
+        The test dataset containing the features for which predictions are to be made.
+        It is assumed that the first column is an identifier (e.g., 'PassengerId').
+
+    Returns:
+    --------
+    output_df : pandas.DataFrame
+        A DataFrame containing the first column of the test data (assumed to be an identifier) 
+        and the predicted target values, labeled as 'Survived'.
     """
     # Create a copy of the training data
     data = test_data.copy()
