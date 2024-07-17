@@ -5,11 +5,50 @@ Created on Mon Jul 15 21:45:20 2024
 @author: Vitor Hugo Mourão & Natália dos Reis
 """
 
+import pandas as pd
+import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
-import pandas as pd
+from sklearn.model_selection import cross_val_score
 
-def train_random_forest(train_data, target, max_depth, number_of_trees):
+def perform_cross_validation_rf(X, y, max_depth_range):
+    """
+    Perform cross-validation to determine the optimal maximum depth for a Random forest Classifier.
+
+    Parameters:
+    -----------
+    X : array-like of shape (n_samples, n_features)
+        The input features for the model. This is the training data used for cross-validation.
+        
+    y : array-like of shape (n_samples,)
+        The target values (class labels) corresponding to the input features.
+        
+    max_depth_range : list or array-like of int
+        A list or range of integers representing the different maximum depths to evaluate 
+        for the random forest classifier.
+
+    Returns:
+    --------
+    cv_scores : dict
+        A dictionary where the keys are the maximum depth values and the values are the mean 
+        cross-validation accuracy scores for those depths.
+    """
+    cv_scores = {}
+    
+    for max_depth in max_depth_range:
+        # Create decision tree classifier
+        clf = RandomForestClassifier(max_depth=max_depth)
+        
+        # Perform 10-fold cross-validation
+        scores = cross_val_score(clf, X, y, cv=10)
+        
+        # Calculate the mean score and store it in the dictionary
+        cv_scores[max_depth] = np.mean(scores)
+        print(f"Max depth: {max_depth}, Cross-validation accuracy: {cv_scores[max_depth]}")
+    
+    return cv_scores
+
+def train_random_forest(train_data, target, max_depth_range, number_of_trees):
     
     # Create a copy of the training data
     data = train_data.copy()
@@ -21,8 +60,15 @@ def train_random_forest(train_data, target, max_depth, number_of_trees):
     # Convert categorical features to numeric
     X = pd.get_dummies(X)
     
+    # Perform cross-validation
+    cv_scores = perform_cross_validation_rf(X, y, max_depth_range)
+    
+    # Find the max_depth with the highest cross-validation score
+    best_max_depth = max(cv_scores, key=cv_scores.get)
+    print(f"Best max depth based on cross-validation: {best_max_depth}")
+    
     # Initialize the Random Forest classifier with given max_depth and number_of_tree
-    rf_classifier = RandomForestClassifier(max_depth=max_depth, n_estimators=number_of_trees)
+    rf_classifier = RandomForestClassifier(max_depth=best_max_depth, n_estimators=number_of_trees)
     
     # Fit the model with the training data
     rf_classifier.fit(X,y)

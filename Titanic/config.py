@@ -36,3 +36,7 @@ test_preprocessing_params = {
 # Tree
 target = 'Survived'
 max_depth = 3
+
+# Random Forest
+max_depth_range = range(1,11)
+number_of_trees = 100

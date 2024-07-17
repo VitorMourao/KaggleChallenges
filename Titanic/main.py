@@ -15,7 +15,7 @@ ipython.run_line_magic('autoreload', '2') # Setting 'autoreload' to mode 2, relo
 import os
 from config import train_data_path, train_data_processed, test_data_path, test_data_processed, test_predict_path, model_eval_path
 from config import train_preprocessing_params, test_preprocessing_params
-from config import target, max_depth
+from config import target, max_depth, max_depth_range, number_of_trees
 from utils.io_utils import load_data, save_data
 from scripts.data_preprocessing import preprocess_data
 from models.fem_survived_male_died import women_first
@@ -39,7 +39,7 @@ def main(models, train_old, test_old, train_new, test_new):
     
     if 'model_03' in models:
         # Implement decision tree 
-        model_03 = train_decision_tree(train_new, target, max_depth_range=range(1,11))
+        model_03 = train_decision_tree(train_new, target, max_depth_range)
         model_03_df = test_decision_tree(model_03, test_new)
         model_03_df_data_path = os.path.join(test_predict_path, 'test_03.csv')
         save_data(model_03_df, model_03_df_data_path)
@@ -47,7 +47,7 @@ def main(models, train_old, test_old, train_new, test_new):
     
     if 'model_04' in models:
         # Implement Random Forest
-        model_04 = train_random_forest(train_new, target,5 ,100)
+        model_04 = train_random_forest(train_new, target, max_depth_range, number_of_trees)
         model_04_df = test_random_forest(model_04, test_new)
         model_04_df_data_path = os.path.join(test_predict_path, 'test_04.csv')
         save_data(model_04_df, model_04_df_data_path)
