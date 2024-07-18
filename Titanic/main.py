@@ -15,13 +15,14 @@ ipython.run_line_magic('autoreload', '2') # Setting 'autoreload' to mode 2, relo
 import os
 from config import train_data_path, train_data_processed, test_data_path, test_data_processed, test_predict_path, model_eval_path
 from config import train_preprocessing_params, test_preprocessing_params
-from config import target, max_depth, max_depth_range, number_of_trees
+from config import target, max_depth_range, number_of_trees
 from utils.io_utils import load_data, save_data
 from scripts.data_preprocessing import preprocess_data
 from models.fem_survived_male_died import women_first
 from models.logistic_regression import train_logistic_regression, test_logistic_regression
 from models.decision_tree import train_decision_tree, test_decision_tree
 from models.random_forest import train_random_forest, test_random_forest
+from models.neural_network import train_neural_network, test_neural_network
 
 def main(models, train_old, test_old, train_new, test_new):
     if 'model_01' in models:
@@ -53,7 +54,10 @@ def main(models, train_old, test_old, train_new, test_new):
         save_data(model_04_df, model_04_df_data_path)
     
     if 'model_05' in models:
-        print("model_05 not implemented yet\n")
+        model_05, preprocessor = train_neural_network(train_new, target)
+        model_05_df = test_neural_network(test_new, target, model_05, preprocessor)
+        model_05_df_data_path = os.path.join(test_predict_path, 'test_05.csv')
+        save_data(model_05_df, model_05_df_data_path)
     
 
 # If this script is being run as the main program

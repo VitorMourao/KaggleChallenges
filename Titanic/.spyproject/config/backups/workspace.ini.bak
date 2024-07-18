@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['models\\fem_survived_male_died.py', 'main.py', 'models\\logistic_regression.py', 'scripts\\data_preprocessing.py', 'utils\\clean_test.py', 'config.py', 'models\\decision_tree.py', 'outputs\\model_evaluations\\models_evals.csv']
+recent_files = ['main.py', 'utils\\clean_test.py', 'models\\decision_tree.py', 'models\\random_forest.py', 'models\\neural_network.py', '..\\..\\..\\..\\Downloads\\EMBRAPA_NewPC01\\Value-of-Information_Paper\\Codes_Data\\outlier_analysis.py']
 
 [main]
 version = 0.2.0
