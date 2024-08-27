@@ -9,6 +9,7 @@ from utils.io_utils import load_data, save_data
 from utils.imputation_utils import apply_knn_imputation
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import logging
+import re
 import pandas as pd
 
 def missing_values(df, drop_columns, fillna_columns, n_neighbors = 5):
@@ -62,6 +63,42 @@ def missing_values(df, drop_columns, fillna_columns, n_neighbors = 5):
         
     return df
 
+# Function to classify marital status as binary (1 for married, 0 for unmarried/unknown)
+def get_marital_status_binary(name):
+    # Extract the title using a regular expression
+    title_search = re.search(r',\s*([^\.]*)\.', name)
+    if title_search:
+        title = title_search.group(1).strip()
+        
+        # Binary classification for marital status
+        if title == 'Mrs':
+            return 1  # Married
+        else:
+            return 0  # Unmarried or Unknown
+    else:
+        return 0  # Return 0 for unknown cases
+    
+# Function to apply binary marital status extraction on the entire DataFrame
+def extract_marital_status_binary(df):
+    # Apply the get_marital_status_binary function to the Name column and create a new binary column
+    df['Married'] = df['Name'].apply(get_marital_status_binary)
+    return df
+
+# Function to count the number of names, excluding those in parentheses
+def count_names_excluding_parentheses(name):
+    # Remove content inside parentheses
+    name_without_parentheses = re.sub(r'\(.*?\)', '', name).strip()
+    # Split the name by spaces to count the number of parts (names)
+    name_parts = name_without_parentheses.split()
+    # Count the number of words that are actual names (ignoring titles like Mr, Mrs)
+    return len([part for part in name_parts if part not in ['Mr.', 'Mrs.', 'Miss.', 'Master.', 'Dr.', 'Rev.']])
+
+# Function to add the number of names column to the DataFrame
+def add_name_count_column(df):
+    # Apply the count_names_excluding_parentheses function to the Name column
+    df['Name_Count'] = df['Name'].apply(count_names_excluding_parentheses)
+    return df
+
 def normalization(df, normalize_columns, method):
     """
     Normalize numeric columns
@@ -96,7 +133,10 @@ def preprocess_data(filepath_I,filepath_O, drop_columns, fillna_columns, n_neigh
     df = load_data(filepath_I)
     copy_df = df.copy()
     copy_df = missing_values(copy_df, drop_columns, fillna_columns, n_neighbors)
+    copy_df = extract_marital_status_binary(copy_df)
+    copy_df = add_name_count_column(copy_df)
     copy_df = normalization(copy_df, normalize_columns, method)
+    #TODO: Balance the target
     
     save_data(copy_df, filepath_O)
     return

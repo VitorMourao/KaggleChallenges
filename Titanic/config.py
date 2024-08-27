@@ -17,7 +17,7 @@ model_eval_path = os.path.join('outputs', 'model_evaluations', 'models_evals.csv
 
 # Preprocessing parameters
 train_preprocessing_params = {
-    'drop_columns': ['Cabin','Name','Ticket'],
+    'drop_columns': ['Cabin','Ticket'],
     'fillna_columns': {'Embarked': 'mode', 'Age': 'knn'},
     'n_neighbors': 5,
     'normalize_columns': ['Age', 'SibSp', 'Parch', 'Fare'],
@@ -25,7 +25,7 @@ train_preprocessing_params = {
 }
 
 test_preprocessing_params = {
-    'drop_columns': ['Cabin','Name','Ticket'],
+    'drop_columns': ['Cabin','Ticket'],
     'fillna_columns': {'Fare': 'mean', 'Age': 'knn'},
     'n_neighbors': 5,
     'normalize_columns': ['Age', 'SibSp', 'Parch', 'Fare'],

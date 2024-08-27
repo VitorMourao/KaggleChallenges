@@ -77,6 +77,11 @@ if __name__ == '__main__':
     print("Available models: ", available_models)
     models_to_run = input("Enter the models you want to run (separated by space): ").split()
     
+    # Check if the user entered "0" to skip running any model
+    if models_to_run == ['0']:
+        print("No models selected. Exiting without running any models.")
+        exit(0)
+    
     # Validate input
     for model in models_to_run:
         if model not in available_models:
